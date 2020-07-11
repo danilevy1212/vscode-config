@@ -1,0 +1,32 @@
+* VSCODE Config
+
+  This repo contains my setting's for visual-studio-code.
+
+** Installation
+
+   Clone the repository in the location of User settings folder. If you have
+   already made modifications to you VSCode settings you may have to delete this
+   folder first.
+
+   #+BEGIN_SRC shell
+     git clone https://github.com/danilevy1212/vscode-config.git \
+      "$XDG_CONFIG_HOME/Code[- VERSION]/User"
+   #+END_SRC
+
+   The [bracketed] text can vary depending on the installed Visual Studio Code
+   version. Lastly, to install all the extensions run the ~install-extensions.sh~
+   script. From the User directory run:
+
+
+   #+BEGIN_SRC shell
+     ./install-extensions.sh
+   #+END_SRC
+
+
+*** Warning
+
+    As of the time of writing, vs-code does not fully suport the [[https://specifications.freedesktop.org/basedir-spec/latest/ar01s03.html][XDG Base
+    Directory Specification]], as the user cannot change the directory of the
+    ~~/.vscode[- VERSION]/~ folder.
+
+    There is a open [[https://github.com/microsoft/vscode/issues/84808][github issue]] where a solution to this problem is being discussed.
