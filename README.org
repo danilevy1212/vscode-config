@@ -1,6 +1,6 @@
 * VSCODE Config
 
-  This repo contains my setting's for visual-studio-code.
+  This repo contains my settings for visual-studio-code.
 
 ** Installation
 
@@ -21,6 +21,21 @@
    #+BEGIN_SRC shell
      ./install-extensions.sh
    #+END_SRC
+
+
+    Optionally, you can enable a set of custom git-hooks to automate the process
+    of extension management, by running:
+
+    #+BEGIN_SRC shell
+      git config core.hooksPath .githooks
+    #+END_SRC
+
+    or
+
+    #+BEGIN_SRC shell
+      find .git/hooks -type l -exec rm {} \;
+      find .githooks -type f -exec ln -sf ../../{} .git/hooks/ \;
+    #+END_SRC
 
 
 *** Warning

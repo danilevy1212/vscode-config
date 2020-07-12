@@ -1,0 +1,82 @@
+#!/usr/bin/env sh
+
+show_discrepencies_msg(){
+    printf "\nAlready Installed\t\t\t\t\t\tRegistered\n\n"
+    printf "$DIFFERENCES\n\n"
+    echo "There are discrepencies between installed and registered extensions."
+    printf "\nHow to resolve?"
+    printf "\n\t(m)erge (DEFAULT)"
+    printf "\n\t(k)eep installed extensions, override registry"
+    printf "\n\t(d)iscard locally installed extensions\n\n"
+}
+
+install_extensions() {
+    [ -z "$@" ] && return 0
+
+    echo "$@" | while IFS= read -r ext; do
+        code --install-extension "$ext"
+    done
+}
+
+uninstall_extensions() {
+    [ -z "$@" ] && return 0
+
+    echo "$@" | while IFS= read -r ext; do
+        code --uninstall-extension "$ext"
+    done
+}
+
+clean_up(){
+    echo "$@" | sed 's/[^a-zA-Z0-9.]//g'
+}
+
+
+unset GIT_LITERAL_PATHSPECS
+
+PROJECT_DIR="$(git rev-parse --show-toplevel)"
+EXTENSIONS_REGISTRY="$PROJECT_DIR"/extension-list.txt
+EXTENSIONS_TO_INSTALL="$(sort -f "$EXTENSIONS_REGISTRY")"
+EXTENSIONS_INSTALLED="$(code --list-extensions | sort -f)"
+TMP_DIR="$(mktemp -d)"
+EXTENSIONS_INSTALLED="$(code --list-extensions | sort -f)"
+EXTENSIONS_INSTALLED_PIPE="$TMP_DIR"/installed-extensions
+
+mkfifo "$EXTENSIONS_INSTALLED_PIPE"
+echo "$EXTENSIONS_INSTALLED" > "$EXTENSIONS_INSTALLED_PIPE" &
+
+DIFFERENCES="$(diff -y --color --suppress-common-lines \
+                   "$EXTENSIONS_INSTALLED_PIPE" "$EXTENSIONS_REGISTRY")"
+REGISTERED_ONLY="$(echo "$DIFFERENCES" | sed '/>/d')"
+INSTALLED_ONLY="$(echo "$DIFFERENCES" | sed '/</d')"
+
+if [ -n "$DIFFERENCES" ]; then
+    show_discrepencies_msg
+
+    read -p "(M/k/d): " OPT
+
+
+    case "$OPT" in
+        k)
+            printf "Keeping installed extensions.\n"
+
+            echo "$EXTENSIONS_INSTALLED" > "$EXTENSIONS_REGISTRY"
+          ;;
+        d)
+            printf "Overriding locally installed extensions with registry.\n"
+
+            uninstall_extensions "$(clean_up "$INSTALLED_ONLY")"
+            install_extensions "$(clean_up "$REGISTERED_ONLY")"
+            echo "$(code --list-extensions | sort -f)" > "$EXTENSIONS_REGISTRY"
+          ;;
+        *)
+            printf "Merging locally installed extensions with registry."
+
+            MISSING="$(printf "$REGISTERED_ONLY\n$INSTALLED_ONLY")"
+            install_extensions "$(clean_up "$MISSING")"
+            echo "$(code --list-extensions | sort -f)" > "$EXTENSIONS_REGISTRY"
+          ;;
+    esac
+fi
+
+
+rm -r "$TMP_DIR"
