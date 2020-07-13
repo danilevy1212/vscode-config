@@ -17,7 +17,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "terminal.integrated.shell.linux": "/bin/zsh",
-  "window.menuBarVisibility": "hidden",
+  "window.menuBarVisibility": "toggle",
   "vim.enableNeovim": true,
   "vim.neovimPath": "/usr/bin/nvim",
   "telemetry.enableTelemetry": false,
@@ -88,5 +88,31 @@
   "workbench.colorTheme": "Nord",
   "vetur.useWorkspaceDependencies": true,
   "todo-tree.tree.showScanModeButton": false,
-  "zenMode.hideLineNumbers": false
+  "zenMode.hideLineNumbers": false,
+  "colorize.colorized_variables": [
+    "CSS",
+    "LESS",
+    "SASS",
+    "STYLUS"
+  ],
+  "colorize.languages": [
+    "css",
+    "sass",
+    "scss",
+    "less",
+    "postcss",
+    "sss",
+    "stylus",
+    "javascript",
+    "typescript",
+    "xml",
+    "svg"
+  ],
+  "colorize.include": [
+    "*.vue"
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.statusBar.visible": true
 }

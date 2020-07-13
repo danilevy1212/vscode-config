@@ -4,7 +4,6 @@ eamodio.gitlens
 eg2.vscode-npm-script
 esbenp.prettier-vscode
 Gruntfuggly.todo-tree
-octref.vetur
 rvest.vs-code-prettier-eslint
 vscodevim.vim
 yoyo930021.vuter
