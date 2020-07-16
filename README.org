@@ -10,10 +10,10 @@
 
    #+BEGIN_SRC shell
      git clone https://github.com/danilevy1212/vscode-config.git \
-      "$XDG_CONFIG_HOME/Code[- VERSION]/User"
+      ".config/Code/User"
    #+END_SRC
 
-   The [bracketed] text can vary depending on the installed Visual Studio Code
+   The name of the "Code" folder may vary depending on the installed Visual Studio Code
    version. Lastly, to install all the extensions run the ~install-extensions.sh~
    script. From the User directory run:
 
