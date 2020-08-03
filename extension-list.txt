@@ -1,4 +1,5 @@
 arcticicestudio.nord-visual-studio-code
+bungcip.better-toml
 CoenraadS.bracket-pair-colorizer-2
 dbaeumer.vscode-eslint
 donjayamanne.githistory
@@ -9,6 +10,8 @@ firefox-devtools.vscode-firefox-debug
 Gruntfuggly.todo-tree
 kamikillerto.vscode-colorize
 msjsdiag.debugger-for-chrome
+oderwat.indent-rainbow
+rust-lang.rust
 rvest.vs-code-prettier-eslint
 vscodevim.vim
 yoyo930021.vuter
